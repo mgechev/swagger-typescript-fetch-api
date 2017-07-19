@@ -24,7 +24,7 @@ At this point, you've likely generated a client setup.  It will include somethin
 |-- src
 |--- main
 |---- java
-|----- com.rhyme.codegen.TypescriptFetchApiGenerator.java // generator file
+|----- com.rhyme.codegen.TypeScriptFetchApiGenerator.java // generator file
 |---- resources
 |----- typescript-api-fetch // template files
 |----- META-INF
@@ -34,7 +34,7 @@ At this point, you've likely generated a client setup.  It will include somethin
 
 You _will_ need to make changes in at least the following:
 
-`TypescriptFetchApiGenerator.java`
+`TypeScriptFetchApiGenerator.java`
 
 Templates in this folder:
 
@@ -56,8 +56,8 @@ Now your templates are available to the client generator and you can write outpu
 
 ## But how do I modify this?
 
-The `TypescriptFetchApiGenerator.java` has comments in it--lots of comments.  There is no good substitute
-for reading the code more, though.  See how the `TypescriptFetchApiGenerator` implements `CodegenConfig`.
+The `TypeScriptFetchApiGenerator.java` has comments in it--lots of comments.  There is no good substitute
+for reading the code more, though.  See how the `TypeScriptFetchApiGenerator` implements `CodegenConfig`.
 That class has the signature of all values that can be overridden.
 
 For the templates themselves, you have a number of values available to you for generation.
