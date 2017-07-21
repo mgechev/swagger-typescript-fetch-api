@@ -76,10 +76,6 @@ public class TypeScriptFetchApiGenerator extends AbstractTypeScriptClientCodegen
         } else {
             type = swaggerType;
         }
-
-        if (!startsWithLanguageSpecificPrimitiv(type)) {
-            type = "models." + swaggerType;
-        }
         return type;
     }
 
