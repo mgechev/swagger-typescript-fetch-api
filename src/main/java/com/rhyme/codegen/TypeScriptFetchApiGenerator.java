@@ -4,6 +4,7 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.CodegenConstants.MODEL_PROPERTY_NAMING_TYPE;
 import io.swagger.codegen.languages.AbstractTypeScriptClientCodegen;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
@@ -36,17 +37,22 @@ public class TypeScriptFetchApiGenerator extends AbstractTypeScriptClientCodegen
     }
     
     @Override
+    public String getModelPropertyNaming() {
+    		return "original";
+    }
+    
+    @Override
     public String getTypeDeclaration(Property p) {
         Property inner;
-        if(p instanceof ArrayProperty) {
+        if (p instanceof ArrayProperty) {
             ArrayProperty mp1 = (ArrayProperty)p;
             inner = mp1.getItems();
             return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
-        } else if(p instanceof MapProperty) {
+        } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty)p;
             inner = mp.getAdditionalProperties();
             return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
+        } else if (p instanceof FileProperty || p instanceof ObjectProperty) {
             return "any";
         } else {
             return super.getTypeDeclaration(p);
@@ -56,7 +62,7 @@ public class TypeScriptFetchApiGenerator extends AbstractTypeScriptClientCodegen
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if (languageSpecificPrimitives.contains(swaggerType)) {
             return swaggerType;
         }
         return addModelPrefix(swaggerType);
@@ -78,16 +84,6 @@ public class TypeScriptFetchApiGenerator extends AbstractTypeScriptClientCodegen
         }
         return type;
     }
-
-
-    private boolean startsWithLanguageSpecificPrimitiv(String type) {
-        for (String langPrimitive:languageSpecificPrimitives) {
-            if (type.startsWith(langPrimitive))  {
-                return true;
-            }
-        }
-        return false;
-    }
     
     @Override
     public void processOpts() {
@@ -108,9 +104,11 @@ public class TypeScriptFetchApiGenerator extends AbstractTypeScriptClientCodegen
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // process enum in models
-        List<Object> models = (List<Object>) postProcessModelsEnum(objs).get("models");
+        @SuppressWarnings("unchecked")
+		List<Object> models = (List<Object>) postProcessModelsEnum(objs).get("models");
         for (Object _mo : models) {
-            Map<String, Object> mo = (Map<String, Object>) _mo;
+            @SuppressWarnings("unchecked")
+			Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
             cm.imports = new TreeSet(cm.imports);
             for (CodegenProperty var : cm.vars) {
