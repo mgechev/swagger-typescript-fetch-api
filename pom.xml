@@ -5,7 +5,7 @@
   <artifactId>typescript-fetch-api-swagger-codegen</artifactId>
   <packaging>jar</packaging>
   <name>typescript-fetch-api-swagger-codegen</name>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <prerequisites>
     <maven>2.2.0</maven>
   </prerequisites>
